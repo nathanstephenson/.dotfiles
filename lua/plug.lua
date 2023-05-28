@@ -10,3 +10,4 @@ vim.call("plug#end")
 
 require('plug.telescope')
 require('plug.harpoon')
+require('plug.coc')
