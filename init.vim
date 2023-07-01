@@ -27,7 +27,7 @@ set signcolumn=yes
 nnoremap q <nop>
 
 " K to insert line breaks (inverse of J)
-nmap K i<cr><Esc>b
+nmap K i<cr><Esc>
 
 " Center screen after ctrl+d or ctrl+u
 nnoremap <C-d> <C-d>zz
