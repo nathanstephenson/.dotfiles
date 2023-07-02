@@ -5,4 +5,4 @@ nnoremap gd editor.action.revealDefinition
 "Go to next error/warning/smell
 nnoremap ge editor.action.marker.next
 
-source ~/.vim/init.vim
+source ~/.config/vim/init.vim
