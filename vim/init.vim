@@ -32,3 +32,6 @@ nmap K i<cr><Esc>
 " Center screen after ctrl+d or ctrl+u
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
+
+" Jump to last file visited
+nnoremap <leader><leader> :e #<cr>
