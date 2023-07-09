@@ -1,6 +1,9 @@
 " Persist undo
 set undofile
-set undodir="~/.vim/undodir"
+set undodir=$HOME/.config/vim/undodir//
+
+" Set swap file location
+set directory=$HOME/.config/vim/swap//
 
 " Display relative line numbers
 set number
