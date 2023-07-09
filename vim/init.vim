@@ -38,3 +38,21 @@ nnoremap <C-u> <C-u>zz
 
 " Jump to last file visited
 nnoremap <leader><leader> :e #<cr>
+
+" Go: format on save
+command! GoFmt call GoFmt()
+
+augroup go_autocmd
+  autocmd BufWritePre *.go GoFmt
+augroup END
+
+function! GoFmt()
+  let saved_view = winsaveview()
+  silent %!gofmt
+  if v:shell_error > 0
+    cexpr getline(1, '$')->map({ idx, val -> val->substitute('<standard input>', expand('%'), '') })
+    silent undo
+    cwindow
+  endif
+  call winrestview(saved_view)
+endfunction
