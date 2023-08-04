@@ -16,7 +16,8 @@ endif
 " set spell " enable spell check (may need to download language package)
 
 set title " Show file title
-syntax on
+"syntax on 
+set notermguicolors
 set ttyfast " Speed up scrolling in Vim
 
 source ~/.config/vim/init.vim
