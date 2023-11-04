@@ -39,6 +39,9 @@ nnoremap <C-u> <C-u>zz
 " Jump to last file visited
 nnoremap <leader><leader> :e #<cr>
 
+" Set indentation size
+set shiftwidth=4
+
 " Go: format on save
 command! GoFmt call GoFmt()
 
