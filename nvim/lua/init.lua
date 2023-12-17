@@ -1,16 +1,39 @@
-local api = vim.api
-
-function map(mode, input, out, opts)
-    local options = { noremap = true }
+function Map(mode, input, out, opts)
+    local options = {}
     if opts then
+	opts.noremap = true
+	opts.silent = true
         options = vim.tbl_extend("force", options, opts)
+    else
+	options.noremap = true
+	options.silent = true
     end
-    api.nvim_set_keymap(mode, input, out, options)
+    vim.keymap.set(mode, input, "<nop>", options)
+    vim.keymap.set(mode, input, out, options)
 end
 
-function autocmd(name, actions, patt, comm)
-	api.nvim_create_augroup(name, { clear = true })
-	api.nvim_create_autocmd(actions, { pattern = patt, command = comm, group = name })
+function Autocmd(name, actions, patt, comm)
+    local api = vim.api
+    api.nvim_create_augroup(name, { clear = true })
+    api.nvim_create_autocmd(actions, { pattern = patt, command = comm, group = name })
 end
 
-require('plug')
+Map("n", "<Space>", "<nop>")
+vim.g.mapleader = " "
+vim.opt.termguicolors = true
+
+local lazypath = vim.fn.stdpath("data") .. "./lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }})
+vim.cmd [[colorscheme github_dark_default]]
