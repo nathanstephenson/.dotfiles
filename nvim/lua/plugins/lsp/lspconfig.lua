@@ -15,10 +15,10 @@ return {
 		Map("n", "gf", "<Cmd>Telescope lsp_references<cr>", opts)
 
 		opts.desc = "Go to declaration"
-		Map("n", "gd", vim.lsp.buf.declaration, opts)
+		Map("n", "gD", vim.lsp.buf.declaration, opts)
 
 		opts.desc = "Show LSP definitions"
-		Map("n", "gD", "<Cmd>Telescope lsp_definitions<cr>:noh<cr>", opts)
+		Map("n", "gd", "<Cmd>Telescope lsp_definitions<cr>:noh<cr>", opts)
 
 		opts.desc = "Show LSP implementations"
 		Map("n", "<leader>gf", "<Cmd>Telescope lsp_implementations<cr>", opts)
