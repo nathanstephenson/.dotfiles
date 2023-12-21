@@ -101,5 +101,10 @@ return {
 		capabilities = capabilities,
 		on_attach = keybinds,
 	    })
+
+	    lspconfig["gopls"].setup({
+		capabilities = capabilities,
+		on_attach = keybinds,
+	    })
 	end
 }

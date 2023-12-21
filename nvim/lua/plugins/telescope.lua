@@ -1,5 +1,6 @@
-return { 
+return {
     "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
 	Map("n", "<leader>ff", "<Cmd>Telescope find_files<cr>")
 	Map("n", "<leader>fg", "<Cmd>Telescope live_grep<cr>")

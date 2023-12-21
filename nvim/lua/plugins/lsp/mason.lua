@@ -1,5 +1,5 @@
-return { 
-    "williamboman/mason.nvim", 
+return {
+    "williamboman/mason.nvim",
     dependencies = { "williamboman/mason-lspconfig.nvim" },
     config = function()
 	local mason = require("mason")
@@ -21,7 +21,8 @@ return {
 		"rust_analyzer",
 		"kotlin_language_server",
 		"vimls",
-		"lua_ls"
+		"lua_ls",
+		"gopls"
 	    },
 	    automatic_installation = true
 	})
