@@ -22,6 +22,23 @@ Map("n", "<Space>", "<nop>")
 vim.g.mapleader = " "
 vim.opt.termguicolors = true
 
+local indent_settings = {
+    go = 8
+}
+function SetIndent()
+    local default_indent = 4
+    local filetype = vim.bo.filetype
+    local indent = indent_settings[filetype]
+    if not indent then
+	indent = default_indent
+    end
+    vim.bo.shiftwidth = indent
+    vim.bo.softtabstop = indent
+    vim.bo.tabstop = indent
+    vim.bo.expandtab = true
+end
+Autocmd("FileTypeIndent", "FileType", "*", "lua SetIndent()")
+
 local lazypath = vim.fn.stdpath("data") .. "./lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
