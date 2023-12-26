@@ -11,7 +11,6 @@ function Map(mode, input, out, opts)
     vim.keymap.set(mode, input, "<nop>", options)
     vim.keymap.set(mode, input, out, options)
 end
-
 function Autocmd(name, actions, patt, comm)
     local api = vim.api
     api.nvim_create_augroup(name, { clear = true })
