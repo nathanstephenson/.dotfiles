@@ -2,8 +2,8 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-	"hrsh7th/cmp-nvim-lsp",
-	{ "antosha417/nvim-lsp-file-operations", config = true }
+        "hrsh7th/cmp-nvim-lsp",
+        { "antosha417/nvim-lsp-file-operations", config = true },
     },
     config = function()
 	    local lspconfig = require("lspconfig")
@@ -106,5 +106,23 @@ return {
 		capabilities = capabilities,
 		on_attach = keybinds,
 	    })
+
+	    lspconfig["templ"].setup({
+		capabilities = capabilities,
+		on_attach = keybinds,
+	    })
+
+        lspconfig["tailwindcss"].setup({
+            capabilities = capabilities,
+            on_attach = keybinds,
+            filetypes = { "html", "css", "templ" },
+            init_options = {
+                userLanguages = {
+                    html = "html",
+                    css = "css",
+                    templ = "html",
+                },
+            },
+        })
 	end
 }

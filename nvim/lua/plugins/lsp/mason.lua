@@ -14,15 +14,17 @@ return {
 
 	mason_lspconfig.setup({
 	    ensure_installed = {
-		"tsserver",
-		"html",
-		"cssls",
-		"emmet_ls",
-		"rust_analyzer",
-		"kotlin_language_server",
-		"vimls",
-		"lua_ls",
-		"gopls"
+            "tsserver",
+            "html",
+            "cssls",
+            "emmet_ls",
+            "rust_analyzer",
+            "kotlin_language_server",
+            "vimls",
+            "lua_ls",
+            "gopls",
+            "templ",
+            "tailwindcss",
 	    },
 	    automatic_installation = true
 	})

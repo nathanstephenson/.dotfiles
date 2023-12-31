@@ -22,7 +22,8 @@ vim.g.mapleader = " "
 vim.opt.termguicolors = true
 
 local indent_settings = {
-    go = 8
+    go = 8,
+    templ = 8
 }
 function SetIndent()
     local default_indent = 4
@@ -53,3 +54,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }})
 vim.cmd [[colorscheme github_dark_default]]
+
+vim.filetype.add({
+    extension = {
+        templ = "templ"
+    },
+})
