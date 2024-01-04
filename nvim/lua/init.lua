@@ -1,21 +1,52 @@
 function Map(mode, input, out, opts)
     local options = {}
     if opts then
-	opts.noremap = true
-	opts.silent = true
+        opts.noremap = true
+        opts.silent = true
         options = vim.tbl_extend("force", options, opts)
     else
-	options.noremap = true
-	options.silent = true
+        options.noremap = true
+        options.silent = true
     end
     vim.keymap.set(mode, input, "<nop>", options)
     vim.keymap.set(mode, input, out, options)
 end
+
 function Autocmd(name, actions, patt, comm)
     local api = vim.api
     api.nvim_create_augroup(name, { clear = true })
     api.nvim_create_autocmd(actions, { pattern = patt, command = comm, group = name })
 end
+
+---@param command string
+---@return string|nil
+function GetCommandOutput(command)
+    local handle = io.popen(command)
+    if handle == nil then
+        return nil
+    end
+    local result = handle:read("*a")
+    handle:close()
+    return result
+end
+
+---@param callback function(string)
+function GetProjectPath(callback)
+    local gitPath = GetCommandOutput("git rev-parse --show-toplevel")
+    local updatePathFn = function(returnVal)
+        local path = returnVal
+        if path == 0 or path == nil then
+            path = vim.fn.getcwd()
+        else
+            path = string.gsub(path, "%s+", "")
+        end
+        if callback then
+            callback(path)
+        end
+    end
+    vim.defer_fn(function() updatePathFn(gitPath) end, 0)
+end
+GetProjectPath(function(path) print(path) end)
 
 Map("n", "<Space>", "<nop>")
 vim.g.mapleader = " "
@@ -30,7 +61,7 @@ function SetIndent()
     local filetype = vim.bo.filetype
     local indent = indent_settings[filetype]
     if not indent then
-	indent = default_indent
+        indent = default_indent
     end
     vim.bo.shiftwidth = indent
     vim.bo.softtabstop = indent
@@ -60,3 +91,4 @@ vim.filetype.add({
         templ = "templ"
     },
 })
+
