@@ -33,7 +33,7 @@ return {
             Map("n", "<leader>px", "<Cmd>SessionPurgeOrphaned<cr>")
         end
         vim.api.nvim_create_user_command("SetAutosessionKeybinds", function() GetProjectPath(setKeybinds) end, {})
-        Autocmd("AutoSession Keybinds",  { "BufWinEnter" }, "*", "SetAutosessionKeybinds")
+        Autocmd("AutoSession Keybinds",  { "BufWinEnter" }, { "*/", "*.*" }, "SetAutosessionKeybinds")
 
         require("telescope").load_extension("session-lens")
         local session = require("auto-session.session-lens")
