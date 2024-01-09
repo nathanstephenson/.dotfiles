@@ -9,8 +9,10 @@ return {
             local ts = require("telescope.builtin")
             local find = function() ts.find_files({ cwd = path }) end
             vim.keymap.set("n", "<leader>ff", find, { noremap = true, })
-            local grep = function() ts.live_grep() end
+            local grep = function() ts.live_grep({ cwd = path }) end
             vim.keymap.set("n", "<leader>fg", grep, { noremap = true, })
+            local grepStr = function() ts.grep_string({ cwd = path }) end
+            vim.keymap.set("n", "<leader>fh", grepStr, { noremap = true, })
             Map("n", "<leader>px", "<Cmd>SessionPurgeOrphaned<cr>")
         end
         vim.api.nvim_create_user_command("SetTelescopeKeybinds", function() GetProjectPath(setKeybinds) end, {})
