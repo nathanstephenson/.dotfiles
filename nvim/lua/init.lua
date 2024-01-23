@@ -84,7 +84,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }})
-vim.cmd [[colorscheme github_dark_default]]
+vim.cmd [[colorscheme catppuccin]]
 
 vim.filetype.add({
     extension = {
