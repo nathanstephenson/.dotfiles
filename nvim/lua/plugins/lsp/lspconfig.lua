@@ -33,7 +33,7 @@ return {
 		Map("n", "<leader>q", vim.lsp.buf.rename, opts)
 
 		opts.desc = "Show buffer diagnostics"
-		Map("n", "gE", "<Cmd>Telescope diagnostics bufnr=0<cr>", opts)
+		Map("n", "gE", "<Cmd>Telescope diagnostics bufnr=nil<cr>", opts)
 
 		opts.desc = "Show line diagnostics"
 		Map("n", "ge", vim.diagnostic.open_float, opts)
