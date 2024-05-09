@@ -29,6 +29,10 @@ set signcolumn=yes
 " Disable q
 nnoremap q <nop>
 
+" Set space as leader
+nnoremap <space> <nop>
+nnoremap <space> <leader>
+
 " K to insert line breaks (inverse of J)
 nmap K i<cr><Esc>
 
