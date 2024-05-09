@@ -54,7 +54,8 @@ vim.opt.termguicolors = true
 
 local indent_settings = {
     go = 8,
-    templ = 8
+    templ = 8,
+    yaml = 2
 }
 function SetIndent()
     local default_indent = 4
@@ -91,4 +92,3 @@ vim.filetype.add({
         templ = "templ"
     },
 })
-

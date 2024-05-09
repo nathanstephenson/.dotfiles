@@ -25,6 +25,7 @@ return {
             "gopls",
             "templ",
             "tailwindcss",
+            "pyright"
 	    },
 	    automatic_installation = true
 	})

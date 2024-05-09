@@ -94,7 +94,7 @@ return {
 	    lspconfig["emmet_ls"].setup({
 		capabilities = capabilities,
 		on_attach = keybinds,
-		filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss" }
+		filetypes = { "ts", "tsx", "js", "jsx", "html", "typescriptreact", "javascriptreact", "css", "sass", "scss" }
 	    })
 
 	    lspconfig["kotlin_language_server"].setup({
@@ -124,5 +124,18 @@ return {
                 },
             },
         })
+
+	    lspconfig["pyright"].setup({
+		capabilities = capabilities,
+            filetypes = { "py", "python" },
+		on_attach = keybinds,
+            settings = {
+                python = {
+                    analysis = {
+                        typeCheckingMode = "off",
+                    },
+                },
+            }
+	    })
 	end
 }
