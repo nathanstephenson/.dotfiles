@@ -30,11 +30,32 @@ function GetCommandOutput(command)
     return result
 end
 
+---@param path string
+---@return string|nil
+function GetFirstGitignore(path)
+    local gitignore = GetCommandOutput("[ -f " .. path .. "/.gitignore ] && echo 'truecontainsgitignore' || echo 'falsedoesntcontaingitignore'")
+    if gitignore == nil then
+        return nil
+    end
+    if string.find(gitignore, "falsedoesntcontaingitignore") then
+        local newPath = path .. "/.."
+        return GetFirstGitignore(newPath)
+    end
+    local gitPath = GetCommandOutput("git rev-parse --show-toplevel")
+    if gitPath == nil then
+        gitPath = ""
+    end
+    local realPath = GetCommandOutput("realpath " .. path)
+    if realPath ~= nil and string.len(gitPath) < string.len(realPath) then
+        gitPath = realPath
+    end
+    return gitPath
+end
+
 ---@param callback function(string)
 function GetProjectPath(callback)
-    local gitPath = GetCommandOutput("git rev-parse --show-toplevel")
-    local updatePathFn = function(returnVal)
-        local path = returnVal
+    local gitPath = GetFirstGitignore(vim.fn.getcwd())
+    local updatePathFn = function(path)
         if path == 0 or path == nil then
             path = vim.fn.getcwd()
         else
@@ -44,7 +65,7 @@ function GetProjectPath(callback)
             callback(path)
         end
     end
-    vim.defer_fn(function() updatePathFn(gitPath) end, 0)
+    vim.schedule(function() updatePathFn(gitPath) end)
 end
 GetProjectPath(function(path) print(path) end)
 
