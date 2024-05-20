@@ -30,44 +30,64 @@ function GetCommandOutput(command)
     return result
 end
 
+function DirContains(arg, path, search)
+    local localPath = GetCommandOutput("[ " .. arg .. " " .. path .. "/" .. search .. " ] && echo 'truecontainsfileordirectory' || echo 'falsedoesntcontainfileordirectory'")
+    if localPath == nil then
+        return nil
+    end
+    return localPath:find("truecontainsfileordirectory")
+end
+
 ---@param path string
 ---@return string|nil
 function GetFirstGitignore(path)
-    local gitignore = GetCommandOutput("[ -f " .. path .. "/.gitignore ] && echo 'truecontainsgitignore' || echo 'falsedoesntcontaingitignore'")
-    if gitignore == nil then
-        return nil
-    end
-    if string.find(gitignore, "falsedoesntcontaingitignore") then
-        local newPath = path .. "/.."
-        return GetFirstGitignore(newPath)
-    end
     local gitPath = GetCommandOutput("git rev-parse --show-toplevel")
     if gitPath == nil then
         gitPath = ""
     end
-    local realPath = GetCommandOutput("realpath " .. path)
-    if realPath ~= nil and string.len(gitPath) < string.len(realPath) then
-        gitPath = realPath
+    if path == ("/Users/nathanstephenson/") then
+        if gitPath ~= nil
+        then return gitPath
+        else return nil
+        end
     end
-    return gitPath
+    local dirHasGitignore = DirContains("-f", path, ".gitignore")
+    if dirHasGitignore ~= nil and dirHasGitignore then
+        local realPath = GetCommandOutput("realpath " .. path)
+        if realPath ~= nil and string.len(gitPath) < string.len(realPath) then
+            gitPath = realPath
+        return gitPath
+        end
+    end
+    local dirHasGitFolder = DirContains("-d", path, ".git")
+    if dirHasGitFolder ~= nil and dirHasGitFolder then
+        local realPath = GetCommandOutput("realpath " .. path)
+        if realPath ~= nil and string.len(gitPath) < string.len(realPath) then
+            gitPath = realPath
+        end
+        return gitPath
+    end
+    local newPath = path .. "/.."
+    return GetFirstGitignore(newPath)
 end
 
 ---@param callback function(string)
 function GetProjectPath(callback)
-    local gitPath = GetFirstGitignore(vim.fn.getcwd())
-    local updatePathFn = function(path)
-        if path == 0 or path == nil then
-            path = vim.fn.getcwd()
-        else
-            path = string.gsub(path, "%s+", "")
-        end
-        if callback then
-            callback(path)
-        end
-    end
-    vim.schedule(function() updatePathFn(gitPath) end)
+    --local gitPath = GetFirstGitignore(vim.fn.getcwd())
+    --local updatePathFn = function(path)
+    --    if path == 0 or path == nil then
+    --        path = vim.fn.getcwd()
+    --    else
+    --        path = string.gsub(path, "%s+", "")
+    --    end
+    --    if callback then
+    --        callback(path)
+    --    end
+    --end
+    --vim.schedule(function() updatePathFn(gitPath) end)
+    updatePathFn(vim.fn.FindRootDirectory())
 end
-GetProjectPath(function(path) print(path) end)
+--GetProjectPath(function(path) print(path) end)
 
 Map("n", "<Space>", "<nop>")
 vim.g.mapleader = " "
