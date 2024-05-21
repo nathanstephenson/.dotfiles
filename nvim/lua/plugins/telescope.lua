@@ -4,7 +4,6 @@ return {
     pickers = { "git_files" },
     config = function()
         require("telescope")
-	require("rooter")
 
         local setKeybinds = function()
 	    local path = vim.fn.FindRootDirectory()
@@ -19,7 +18,7 @@ return {
             Map("n", "<leader>px", "<Cmd>SessionPurgeOrphaned<cr>")
         end
         vim.api.nvim_create_user_command("SetTelescopeKeybinds", setKeybinds, {})
-        Autocmd("Telescope Keybinds",  { "RooterChDir" }, { "*/", "*.*" }, "SetTelescopeKeybinds")
+        Autocmd("Telescope Keybinds",  { "BufWinEnter" }, { "*/", "*.*" }, "SetTelescopeKeybinds")
 
         Map("n", "<leader>fb", "<Cmd>Telescope buffers<cr>")
         Map("n", "<leader>fi", "<Cmd>Telescope help_tags<cr>")

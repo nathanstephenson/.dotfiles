@@ -25,7 +25,6 @@ return {
             },
         })
 
-	require("rooter")
         local setKeybinds = function()
 	    local path = vim.fn.FindRootDirectory()
             local as = require("auto-session")
@@ -35,7 +34,7 @@ return {
             Map("n", "<leader>px", "<Cmd>SessionPurgeOrphaned<cr>")
         end
         vim.api.nvim_create_user_command("SetAutosessionKeybinds", setKeybinds, {})
-        Autocmd("AutoSession Keybinds",  { "RooterChDir" }, { "*/", "*.*" }, "SetAutosessionKeybinds")
+        Autocmd("AutoSession Keybinds",  { "BufWinEnter" }, { "*/", "*.*" }, "SetAutosessionKeybinds")
 
         require("telescope").load_extension("session-lens")
         local session = require("auto-session.session-lens")
