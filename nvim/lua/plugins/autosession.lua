@@ -1,6 +1,6 @@
 return {
     "rmagatti/auto-session",
-    dependencies = { "nvim-telescope/telescope.nvim" },
+    dependencies = { "nvim-telescope/telescope.nvim", "airblade/vim-rooter" },
     config = function()
         local autosession = require("auto-session")
         autosession.setup({
@@ -25,14 +25,15 @@ return {
             },
         })
 
-        local setKeybinds = function(path)
+        local setKeybinds = function()
+	    local path = vim.fn.FindRootDirectory()
             local as = require("auto-session")
             vim.keymap.set("n", "<leader>pw", function() as.SaveSession(path, false) end, { noremap = true, })
             vim.keymap.set("n", "<leader>pd", function() as.DeleteSession(path) end, { noremap = true, })
             vim.keymap.set("n", "<leader>po", function() as.RestoreSession(path) end, { noremap = true, })
             Map("n", "<leader>px", "<Cmd>SessionPurgeOrphaned<cr>")
         end
-        vim.api.nvim_create_user_command("SetAutosessionKeybinds", function() GetProjectPath(setKeybinds) end, {})
+        vim.api.nvim_create_user_command("SetAutosessionKeybinds", setKeybinds, {})
         Autocmd("AutoSession Keybinds",  { "BufWinEnter" }, { "*/", "*.*" }, "SetAutosessionKeybinds")
 
         require("telescope").load_extension("session-lens")
