@@ -115,7 +115,7 @@ return {
         lspconfig["tailwindcss"].setup({
             capabilities = capabilities,
             on_attach = keybinds,
-            filetypes = { "html", "css", "templ" },
+            filetypes = { "html", "css", "templ", "javascriptreact", "typescriptreact"},
             init_options = {
                 userLanguages = {
                     html = "html",
@@ -136,6 +136,11 @@ return {
                     },
                 },
             }
+	    })
+
+        lspconfig["rust_analyzer"].setup({
+		capabilities = capabilities,
+		on_attach = keybinds,
 	    })
 	end
 }

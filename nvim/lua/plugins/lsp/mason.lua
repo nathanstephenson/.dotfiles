@@ -25,7 +25,8 @@ return {
             "gopls",
             "templ",
             "tailwindcss",
-            "pyright"
+            "pyright",
+            "rust_analyzer"
 	    },
 	    automatic_installation = true
 	})
