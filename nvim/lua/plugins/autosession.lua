@@ -6,6 +6,7 @@ return {
         autosession.setup({
             log_level = "error",
             auto_session_enable_last_session = false,
+            auto_session_enabled = false,
             cwd_change_handling = {
                 restore_upcoming_session = true, -- already the default, no need to specify like this, only here as an example
                 pre_cwd_changed_hook = nil, -- already the default, no need to specify like this, only here as an example
@@ -26,7 +27,7 @@ return {
         })
 
         local setKeybinds = function()
-	    local path = vim.fn.FindRootDirectory()
+            local path = vim.fn.FindRootDirectory()
             local as = require("auto-session")
             vim.keymap.set("n", "<leader>pw", function() as.SaveSession(path, false) end, { noremap = true, })
             vim.keymap.set("n", "<leader>pd", function() as.DeleteSession(path) end, { noremap = true, })
