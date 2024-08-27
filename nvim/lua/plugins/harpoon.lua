@@ -14,7 +14,7 @@ return {
                 get_root_dir = vim.fn.FindRootDirectory,
                 select = function(list_item, list, option)
                     local root = vim.fn.FindRootDirectory()
-                    print ("Opening " .. root .. list_item.value)
+                    print ("Opening " .. root .. "/" .. list_item.value)
                     vim.cmd("e " .. root .. "/" .. list_item.value)
                 end
             }
@@ -46,5 +46,10 @@ return {
         Map("n", "<leader>2", function() harpoon:list():select(2) end)
         Map("n", "<leader>3", function() harpoon:list():select(3) end)
         Map("n", "<leader>4", function() harpoon:list():select(4) end)
+        Map("n", "<leader>5", function() harpoon:list():select(5) end)
+        Map("n", "<leader>6", function() harpoon:list():select(6) end)
+        Map("n", "<leader>7", function() harpoon:list():select(7) end)
+        Map("n", "<leader>8", function() harpoon:list():select(8) end)
+        Map("n", "<leader>9", function() harpoon:list():select(9) end)
     end,
 }
