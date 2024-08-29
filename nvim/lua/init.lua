@@ -68,6 +68,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }})
 vim.cmd [[colorscheme catppuccin]]
+vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#747990', bold=false })
+vim.api.nvim_set_hl(0, 'CursorLineNr', { fg='#C7D1F0', bold=false })
+vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#747990', bold=false })
 
 vim.filetype.add({
     extension = {
