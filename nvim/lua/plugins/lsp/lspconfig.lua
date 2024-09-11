@@ -86,7 +86,7 @@ return {
 		on_attach = keybinds,
 	    })
 
-	    lspconfig["tsserver"].setup({
+	    lspconfig["ts_ls"].setup({
 		capabilities = capabilities,
 		on_attach = keybinds,
 	    })
@@ -139,6 +139,11 @@ return {
 	    })
 
         lspconfig["rust_analyzer"].setup({
+		capabilities = capabilities,
+		on_attach = keybinds,
+	    })
+
+        lspconfig["gleam"].setup({
 		capabilities = capabilities,
 		on_attach = keybinds,
 	    })

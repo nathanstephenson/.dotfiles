@@ -14,7 +14,7 @@ return {
 
 	mason_lspconfig.setup({
 	    ensure_installed = {
-            "tsserver",
+            "ts_ls",
             "html",
             "cssls",
             "emmet_ls",
@@ -26,7 +26,7 @@ return {
             "templ",
             "tailwindcss",
             "pyright",
-            "rust_analyzer"
+            "rust_analyzer",
 	    },
 	    automatic_installation = true
 	})
