@@ -5,4 +5,4 @@ nmap [e <Action>(GotoPreviousError)
 "Go to next error (also shows hover on error caret arrives on)
 nmap ]e <Action>(GotoNextError)
 
-source ~/.config/vim/init.vim
+source ~/.dotfiles/vim/init.vim

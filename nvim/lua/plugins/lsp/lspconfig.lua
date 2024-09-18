@@ -147,5 +147,10 @@ return {
 		capabilities = capabilities,
 		on_attach = keybinds,
 	    })
+
+        lspconfig["clangd"].setup({
+		capabilities = capabilities,
+		on_attach = keybinds,
+	    })
 	end
 }

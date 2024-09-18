@@ -19,4 +19,4 @@ set ttyfast " Speed up scrolling in Vim
 
 " let g:neoformat_try_node_exe=1
 
-source ~/.config/vim/init.vim
+source ~/.dotfiles/vim/init.vim
