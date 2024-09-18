@@ -3,3 +3,4 @@ vim/swap/
 nvim/plugged/
 coc/
 Microsoft*VisualStudio*Services/
+nvim/lazy-lock.*
