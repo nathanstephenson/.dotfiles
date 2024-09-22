@@ -6,5 +6,6 @@ return {
 	Autocmd("NeofmtOnSave Go", { "BufWritePre", "InsertLeave" }, { "*.go" }, "Neoformat gofmt")
 	Autocmd("NeofmtOnSave Rust", { "BufWritePre", "InsertLeave" }, { "*.rs" }, "Neoformat rustfmt")
 	Autocmd("NeofmtOnSave Python", { "BufWritePre", "InsertLeave" }, { "*.py" }, "Neoformat")
+	Autocmd("NeofmtOnSave Gleam", { "BufWritePre", "InsertLeave" }, { "*.gleam" }, "Neoformat")
     end
 }
