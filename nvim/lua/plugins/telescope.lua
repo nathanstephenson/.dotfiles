@@ -1,14 +1,16 @@
 return {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "airblade/vim-rooter" },
-    pickers = { "git_files" },
+    pickers = {
+        "git_files"
+    },
     config = function()
         require("telescope")
 
         local setKeybinds = function()
 	    local path = vim.fn.FindRootDirectory()
             local ts = require("telescope.builtin")
-            local opts = { cwd = path, path_display = { "truncate", "smart" } }
+            local opts = { cwd = path, path_display = { "truncate", "smart" }, hidden = true, file_ignore_patterns = { ".git/", ".github/" } }
             local find = function() ts.find_files(opts) end
             vim.keymap.set("n", "<leader>ff", find, { noremap = true, })
             local grep = function() ts.live_grep(opts) end
