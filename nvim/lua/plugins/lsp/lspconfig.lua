@@ -91,10 +91,10 @@ return {
 		on_attach = keybinds,
 	    })
 
-	    lspconfig["emmet_ls"].setup({
+	    lspconfig["eslint"].setup({
 		capabilities = capabilities,
 		on_attach = keybinds,
-		filetypes = { "ts", "tsx", "js", "jsx", "html", "typescriptreact", "javascriptreact", "css", "sass", "scss" }
+		filetypes = { "ts", "tsx", "js", "jsx", "typescriptreact", "javascriptreact" }
 	    })
 
 	    lspconfig["kotlin_language_server"].setup({
