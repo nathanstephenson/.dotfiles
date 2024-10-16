@@ -27,6 +27,7 @@ return {
             "tailwindcss",
             "pyright",
             "rust_analyzer",
+            "eslint"
 	    },
 	    automatic_installation = true
 	})

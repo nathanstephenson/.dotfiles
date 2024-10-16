@@ -94,7 +94,6 @@ return {
 	    lspconfig["eslint"].setup({
 		capabilities = capabilities,
 		on_attach = keybinds,
-		filetypes = { "ts", "tsx", "js", "jsx", "typescriptreact", "javascriptreact" }
 	    })
 
 	    lspconfig["kotlin_language_server"].setup({
