@@ -32,6 +32,7 @@ end
 
 Map("n", "<Space>", "<nop>")
 vim.g.mapleader = " "
+Map("n", "<leader>bd", ":%bd|e#")
 vim.opt.termguicolors = true
 
 local indent_settings = {
@@ -67,7 +68,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }})
+require("lazy").setup({{ import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colours" }, { import = "plugins.mini" }})
 vim.cmd [[colorscheme catppuccin]]
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#747990', bold=false })
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg='#C7D1F0', bold=false })
@@ -78,3 +79,5 @@ vim.filetype.add({
         templ = "templ"
     },
 })
+
+Autocmd("Save on change buffer",  { "BufLeave" }, { "*/", "*.*" }, "silent! wa")

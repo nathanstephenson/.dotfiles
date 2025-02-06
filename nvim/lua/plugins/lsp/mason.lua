@@ -8,13 +8,14 @@ return {
 	mason.setup({
 	    ensure_installed = {
 		--formatter
-		"prettier"
+		"prettier",
+        "omnisharp"
 	    }
 	})
 
 	mason_lspconfig.setup({
 	    ensure_installed = {
-            "ts_ls",
+            "vtsls",
             "html",
             "cssls",
             "emmet_ls",
@@ -27,7 +28,8 @@ return {
             "tailwindcss",
             "pyright",
             "rust_analyzer",
-            "eslint"
+            "eslint",
+            "omnisharp",
 	    },
 	    automatic_installation = true
 	})
