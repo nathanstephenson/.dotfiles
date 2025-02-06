@@ -36,8 +36,8 @@ return {
 		{ name = "path" }, -- file system paths
 	    }),
 	    window = {
-		completion = cmp.config.window.bordered(winHighlight),
-		documentation = cmp.config.window.bordered(winHighlight)
+        completion = cmp.config.window.bordered(winHighlight),
+        documentation = cmp.config.window.bordered(winHighlight)
 	    }
 	})
     end

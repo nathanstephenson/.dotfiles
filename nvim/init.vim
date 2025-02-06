@@ -11,7 +11,7 @@ set cursorline " Highlights the current line in the editor
 set mouse=a " Allow to use the mouse in the editor
 " set splitbelow splitright " Change the split screen behavior
 " set wildmenu " Show a more advance menu
-set cc=80 " Show at 80 column a border for good code style
+set cc=160 " Show at 160 column a border for good code style
 " set spell " enable spell check (may need to download language package)
 
 set title " Show file title
