@@ -118,6 +118,12 @@ return {
             handlers = handlers,
         })
 
+        lspconfig["biome"].setup({
+            capabilities = capabilities,
+            on_attach = keybinds,
+            handlers = handlers,
+        })
+
         lspconfig["eslint"].setup({
             capabilities = capabilities,
             on_attach = keybinds,

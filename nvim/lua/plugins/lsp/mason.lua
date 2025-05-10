@@ -7,9 +7,7 @@ return {
 
 	mason.setup({
 	    ensure_installed = {
-		--formatter
-		"prettier",
-        "omnisharp"
+            --formatter
 	    }
 	})
 
@@ -29,7 +27,6 @@ return {
             "pyright",
             "rust_analyzer",
             "eslint",
-            "omnisharp",
 	    },
 	    automatic_installation = true
 	})
