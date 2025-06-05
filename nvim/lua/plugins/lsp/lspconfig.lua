@@ -1,3 +1,5 @@
+OldCwd = ""
+
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
@@ -75,13 +77,13 @@ return {
 			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 		}
 
-		lspconfig["html"].setup({
+		vim.lsp.config("html", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["lua_ls"].setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			settings = {
@@ -100,59 +102,55 @@ return {
 			handlers = handlers,
 		})
 
-		lspconfig["vimls"].setup({
+		vim.lsp.config("vimls", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["cssls"].setup({
+		vim.lsp.config("cssls", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["vtsls"].setup({
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-			root_dir = function(fname)
-				return lspconfig.util.root_pattern("tsconfig.json", "jsconfig.json")(fname)
-					or lspconfig.util.find_git_ancestor(fname)
-			end,
-		})
-
-		lspconfig["biome"].setup({
+		vim.lsp.config("vtsls", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["eslint"].setup({
+		vim.lsp.config("biome", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["kotlin_language_server"].setup({
+		vim.lsp.config("eslint", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["gopls"].setup({
+		vim.lsp.config("kotlin_language_server", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["templ"].setup({
+		vim.lsp.config("gopls", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["tailwindcss"].setup({
+		vim.lsp.config("templ", {
+			capabilities = capabilities,
+			on_attach = keybinds,
+			handlers = handlers,
+		})
+
+		vim.lsp.config("tailwindcss", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			filetypes = { "html", "css", "templ", "javascriptreact", "typescriptreact" },
@@ -166,7 +164,7 @@ return {
 			handlers = handlers,
 		})
 
-		lspconfig["pyright"].setup({
+		vim.lsp.config("pyright", {
 			capabilities = capabilities,
 			filetypes = { "py", "python" },
 			on_attach = keybinds,
@@ -180,25 +178,25 @@ return {
 			handlers = handlers,
 		})
 
-		lspconfig["rust_analyzer"].setup({
+		vim.lsp.config("rust_analyzer", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["gleam"].setup({
+		vim.lsp.config("gleam", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["clangd"].setup({
+		vim.lsp.config("clangd", {
 			capabilities = capabilities,
 			on_attach = keybinds,
 			handlers = handlers,
 		})
 
-		lspconfig["omnisharp"].setup({
+		vim.lsp.config("omnisharp", {
 			cmd = {
 				"dotnet",
 				"/Users/nathanstephenson/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll",
@@ -208,5 +206,67 @@ return {
 			on_attach = keybinds,
 			handlers = handlers,
 		})
+
+		local allLsps = {
+			"html",
+			"lua_ls",
+			"vimls",
+			"cssls",
+			"vtsls",
+			"biome",
+			"eslint",
+			"kotlin_language_server",
+			"gopls",
+			"templ",
+			"tailwindcss",
+			"pyright",
+			"rust_analyzer",
+			"gleam",
+			"clangd",
+			"omnisharp",
+		}
+
+		local function disableAll()
+			for _, v in ipairs(allLsps) do
+				-- print("disabling language server:", v)
+				vim.lsp.enable(v, false)
+			end
+		end
+		local function enableAll()
+			for _, v in ipairs(allLsps) do
+				-- print("enabling language server:", v)
+				vim.lsp.enable(v, true)
+			end
+		end
+
+		local function updateLsp()
+			local cwd = vim.fn.FindRootDirectory()
+			if cwd == OldCwd then
+				-- print("dir not changed, skipping")
+				return
+			end
+			disableAll()
+
+			local sp = Split(cwd, "/")
+			local project = sp[#sp]
+
+			-- print("starting project", project)
+
+			if "pbp_api" == project then
+				-- print("starting limited language servers for project: 'pbp_api'")
+				vim.lsp.enable({ "vtsls", "html", "cssls", "biome" })
+			elseif "platform" == project or "world" == project then
+				-- print("starting limited language servers for project: 'platform'")
+				vim.lsp.enable({ "vtsls", "html", "cssls", "eslint" })
+			else
+				-- print("no project found")
+				enableAll()
+			end
+		end
+
+		disableAll()
+		vim.api.nvim_create_user_command("SetLsp", updateLsp, {})
+		-- Autocmd("LspSetup", { "VimEnter", "BufEnter" }, {}, "SetLsp")
+		Autocmd("LspUpdate", { "DirChangedPre" }, "auto", "SetLsp")
 	end,
 }
