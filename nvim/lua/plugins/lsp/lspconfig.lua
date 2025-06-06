@@ -1,4 +1,4 @@
-OldCwd = ""
+local oldCwd
 
 return {
 	"neovim/nvim-lspconfig",
@@ -77,194 +77,89 @@ return {
 			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 		}
 
-		vim.lsp.config("html", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("lua_ls", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
-					},
-					workspace = {
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
+		for _, v in ipairs(AllLsps) do
+			local opts = {
+				capabilities = capabilities,
+				on_attach = keybinds,
+				handlers = handlers,
+			}
+			if "lua_ls" == v then
+				opts = {
+					capabilities = capabilities,
+					on_attach = keybinds,
+					settings = {
+						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							workspace = {
+								library = {
+									[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+									[vim.fn.stdpath("config") .. "/lua"] = true,
+								},
+							},
 						},
 					},
-				},
-			},
-			handlers = handlers,
-		})
-
-		vim.lsp.config("vimls", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("cssls", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("vtsls", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("biome", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("eslint", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("kotlin_language_server", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("gopls", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("templ", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("tailwindcss", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			filetypes = { "html", "css", "templ", "javascriptreact", "typescriptreact" },
-			init_options = {
-				userLanguages = {
-					html = "html",
-					css = "css",
-					templ = "html",
-				},
-			},
-			handlers = handlers,
-		})
-
-		vim.lsp.config("pyright", {
-			capabilities = capabilities,
-			filetypes = { "py", "python" },
-			on_attach = keybinds,
-			settings = {
-				python = {
-					analysis = {
-						typeCheckingMode = "off",
+					handlers = handlers,
+				}
+			elseif "tailwindcss" == v then
+				opts = {
+					capabilities = capabilities,
+					on_attach = keybinds,
+					filetypes = { "html", "css", "templ", "javascriptreact", "typescriptreact" },
+					init_options = {
+						userLanguages = {
+							html = "html",
+							css = "css",
+							templ = "html",
+						},
 					},
-				},
-			},
-			handlers = handlers,
-		})
-
-		vim.lsp.config("rust_analyzer", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("gleam", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("clangd", {
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		vim.lsp.config("omnisharp", {
-			cmd = {
-				"dotnet",
-				"/Users/nathanstephenson/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll",
-			},
-			--cmd = { "dotnet", "/Users/nathanstephenson/.config/omnisharp/OmniSharp.dll" },
-			capabilities = capabilities,
-			on_attach = keybinds,
-			handlers = handlers,
-		})
-
-		local allLsps = {
-			"html",
-			"lua_ls",
-			"vimls",
-			"cssls",
-			"vtsls",
-			"biome",
-			"eslint",
-			"kotlin_language_server",
-			"gopls",
-			"templ",
-			"tailwindcss",
-			"pyright",
-			"rust_analyzer",
-			"gleam",
-			"clangd",
-			"omnisharp",
-		}
-
-		local function disableAll()
-			for _, v in ipairs(allLsps) do
-				-- print("disabling language server:", v)
-				vim.lsp.enable(v, false)
+					handlers = handlers,
+				}
+			elseif "pyright" == v then
+				opts = {
+					capabilities = capabilities,
+					filetypes = { "py", "python" },
+					on_attach = keybinds,
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "off",
+							},
+						},
+					},
+					handlers = handlers,
+				}
 			end
-		end
-		local function enableAll()
-			for _, v in ipairs(allLsps) do
-				-- print("enabling language server:", v)
-				vim.lsp.enable(v, true)
-			end
+			vim.lsp.config(v, opts)
 		end
 
 		local function updateLsp()
 			local cwd = vim.fn.FindRootDirectory()
-			if cwd == OldCwd then
-				-- print("dir not changed, skipping")
+			if cwd == oldCwd then
+				print("dir not changed, skipping")
 				return
 			end
-			disableAll()
+			vim.lsp.enable(AllLsps, false)
 
 			local sp = Split(cwd, "/")
 			local project = sp[#sp]
 
-			-- print("starting project", project)
+			print("starting project", project)
 
 			if "pbp_api" == project then
-				-- print("starting limited language servers for project: 'pbp_api'")
+				print("starting limited language servers for project: 'pbp_api'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "biome" })
 			elseif "platform" == project or "world" == project then
 				-- print("starting limited language servers for project: 'platform'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "eslint" })
 			else
 				-- print("no project found")
-				enableAll()
+				vim.lsp.enable(AllLsps, true)
 			end
 		end
 
-		disableAll()
+		vim.lsp.enable(AllLsps, false)
 		vim.api.nvim_create_user_command("SetLsp", updateLsp, {})
 		-- Autocmd("LspSetup", { "VimEnter", "BufEnter" }, {}, "SetLsp")
 		Autocmd("LspUpdate", { "DirChangedPre" }, "auto", "SetLsp")

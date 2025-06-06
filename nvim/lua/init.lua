@@ -97,6 +97,24 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+AllLsps = {
+	"html",
+	"lua_ls",
+	"vimls",
+	"cssls",
+	"vtsls",
+	"biome",
+	"eslint",
+	"kotlin_language_server",
+	"gopls",
+	"templ",
+	"tailwindcss",
+	"pyright",
+	"rust_analyzer",
+	"gleam",
+	"clangd",
+}
+
 require("lazy").setup({
 	{ import = "plugins" },
 	{ import = "plugins.lsp" },
