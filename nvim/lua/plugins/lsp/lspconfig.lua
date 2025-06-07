@@ -84,9 +84,7 @@ return {
 				handlers = handlers,
 			}
 			if "lua_ls" == v then
-				opts = {
-					capabilities = capabilities,
-					on_attach = keybinds,
+				opts = Merge(opts, {
 					settings = {
 						Lua = {
 							diagnostics = {
@@ -100,12 +98,9 @@ return {
 							},
 						},
 					},
-					handlers = handlers,
-				}
+				})
 			elseif "tailwindcss" == v then
-				opts = {
-					capabilities = capabilities,
-					on_attach = keybinds,
+				opts = Merge(opts, {
 					filetypes = { "html", "css", "templ", "javascriptreact", "typescriptreact" },
 					init_options = {
 						userLanguages = {
@@ -114,13 +109,10 @@ return {
 							templ = "html",
 						},
 					},
-					handlers = handlers,
-				}
+				})
 			elseif "pyright" == v then
-				opts = {
-					capabilities = capabilities,
+				opts = Merge(opts, {
 					filetypes = { "py", "python" },
-					on_attach = keybinds,
 					settings = {
 						python = {
 							analysis = {
@@ -128,8 +120,7 @@ return {
 							},
 						},
 					},
-					handlers = handlers,
-				}
+				})
 			end
 			vim.lsp.config(v, opts)
 		end
@@ -159,9 +150,9 @@ return {
 			end
 		end
 
-		vim.lsp.enable(AllLsps, false)
+		-- vim.lsp.enable(AllLsps, false)
 		vim.api.nvim_create_user_command("SetLsp", updateLsp, {})
-		-- Autocmd("LspSetup", { "VimEnter", "BufEnter" }, {}, "SetLsp")
+		-- Autocmd("LspSetup", { "VimEnter" }, {}, "SetLsp")
 		Autocmd("LspUpdate", { "DirChangedPre" }, "auto", "SetLsp")
 	end,
 }

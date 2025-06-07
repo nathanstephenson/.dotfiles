@@ -1,3 +1,14 @@
+---@param t1 table the initial table
+---@param t2 table the table to update/overwrite values with
+---@return table
+function Merge(t1, t2)
+	local t3 = t1
+	for k, v in pairs(t2) do
+		t3[k] = v
+	end
+	return t3
+end
+
 function Dump(o)
 	if type(o) == "table" then
 		local s = "{ "
