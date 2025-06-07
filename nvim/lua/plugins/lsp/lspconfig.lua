@@ -140,10 +140,10 @@ return {
 			-- print("starting project", project)
 
 			if "pbp-api" == project then
-				print("starting limited language servers for project: 'pbp-api'")
+				-- print("starting limited language servers for project: 'pbp-api'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "biome" })
 			elseif "platform" == project or "world" == project then
-				print("starting limited language servers for project: 'platform'")
+				-- print("starting limited language servers for project: 'platform'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "eslint" })
 			else
 				-- print("no project found")
