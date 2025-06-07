@@ -82,6 +82,7 @@ return {
 				capabilities = capabilities,
 				on_attach = keybinds,
 				handlers = handlers,
+				autostart = false,
 			}
 			if "lua_ls" == v then
 				opts = Merge(opts, {
@@ -128,7 +129,7 @@ return {
 		local function updateLsp()
 			local cwd = vim.fn.FindRootDirectory()
 			if cwd == oldCwd then
-				print("dir not changed, skipping")
+				-- print("dir not changed, skipping")
 				return
 			end
 			vim.lsp.enable(AllLsps, false)
@@ -136,13 +137,13 @@ return {
 			local sp = Split(cwd, "/")
 			local project = sp[#sp]
 
-			print("starting project", project)
+			-- print("starting project", project)
 
-			if "pbp_api" == project then
-				print("starting limited language servers for project: 'pbp_api'")
+			if "pbp-api" == project then
+				print("starting limited language servers for project: 'pbp-api'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "biome" })
 			elseif "platform" == project or "world" == project then
-				-- print("starting limited language servers for project: 'platform'")
+				print("starting limited language servers for project: 'platform'")
 				vim.lsp.enable({ "vtsls", "html", "cssls", "eslint" })
 			else
 				-- print("no project found")
