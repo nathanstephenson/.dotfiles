@@ -12,7 +12,7 @@ return {
 		})
 
 		local api = require("nvim-tree.api")
-		Map("n", "<leader>tt", function()
+		Map("n", "<leader>to", function()
 			api.tree.toggle({ path = vim.fn.FindRootDirectory(), update_root = false, find_file = true })
 		end, { desc = "Toggle NvimTree" })
 		Map("n", "<leader>tj", function()
