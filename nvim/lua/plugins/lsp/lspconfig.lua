@@ -132,12 +132,13 @@ return {
 				-- print("dir not changed, skipping")
 				return
 			end
+			oldCwd = cwd
 			vim.lsp.enable(AllLsps, false)
 
 			local sp = Split(cwd, "/")
 			local project = sp[#sp]
 
-			-- print("starting project", project)
+			print("starting project", project)
 
 			if "pbp-api" == project then
 				-- print("starting limited language servers for project: 'pbp-api'")
@@ -153,7 +154,7 @@ return {
 
 		-- vim.lsp.enable(AllLsps, false)
 		vim.api.nvim_create_user_command("SetLsp", updateLsp, {})
-		-- Autocmd("LspSetup", { "VimEnter" }, {}, "SetLsp")
-		Autocmd("LspUpdate", { "DirChangedPre" }, "auto", "SetLsp")
+		Autocmd("LspSetup", { "VimEnter", "BufNew" }, {}, "SetLsp")
+		-- Autocmd("LspUpdate", { "DirChangedPre" }, "auto", "SetLsp")
 	end,
 }
