@@ -7,7 +7,7 @@ return {
 			term_colors = true,
 			color_overrides = {
 				all = {
-					base = "#000000",
+					base = "#1a1a1a",
 				},
 			},
 		})
