@@ -72,7 +72,7 @@ end
 
 Map("n", "<Space>", "<nop>")
 vim.g.mapleader = " "
-Map("n", "<leader>bd", ":%bd|e#")
+Map("n", "<leader>bd", ":%bd|e#<CR>")
 vim.opt.termguicolors = true
 
 local indent_settings = {
