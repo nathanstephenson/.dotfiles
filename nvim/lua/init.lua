@@ -75,6 +75,7 @@ vim.g.mapleader = " "
 Map("n", "<leader>bd", ":%bd|e#<CR>")
 vim.o.termguicolors = true
 vim.o.splitright = true
+vim.o.guicursor = ""
 
 local indent_settings = {
 	go = 8,
