@@ -1,5 +1,60 @@
 local oldCwd
 
+-- Specify how the border looks like
+local border = {
+	{ "╭", "FloatBorder" },
+	{ "─", "FloatBorder" },
+	{ "╮", "FloatBorder" },
+	{ "│", "FloatBorder" },
+	{ "╯", "FloatBorder" },
+	{ "─", "FloatBorder" },
+	{ "╰", "FloatBorder" },
+	{ "│", "FloatBorder" },
+}
+
+local opts = {}
+opts.desc = "Go to declaration"
+Map("n", "gD", vim.lsp.buf.declaration, opts)
+
+opts.desc = "Show available code actions"
+Map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+
+opts.desc = "Smart rename"
+Map("n", "<leader>q", vim.lsp.buf.rename, opts)
+
+opts.desc = "Show line diagnostics"
+vim.diagnostic.config({
+	float = { border = border },
+})
+Map("n", "ge", vim.diagnostic.open_float, opts)
+
+opts.desc = "Go to previous diagnostic"
+Map("n", "[e", vim.diagnostic.goto_prev, opts)
+
+opts.desc = "Go to next diagnostic"
+Map("n", "]e", vim.diagnostic.goto_next, opts)
+
+opts.desc = "Show documentation"
+Map("n", "gh", vim.lsp.buf.hover, opts)
+
+opts.desc = "Show LSP references"
+Map("n", "gf", "<Cmd>Telescope lsp_references<cr>", opts)
+
+opts.desc = "Show LSP definitions"
+Map("n", "gd", "<Cmd>Telescope lsp_definitions<cr>:noh<cr>", opts)
+
+opts.desc = "Show LSP implementations"
+Map("n", "<leader>gf", "<Cmd>Telescope lsp_implementations<cr>", opts)
+
+opts.desc = "Show type definitions"
+Map("n", "gt", "<Cmd>Telescope lsp_type_definitions<cr>", opts)
+
+opts.desc = "Show buffer diagnostics"
+Map("n", "gE", "<Cmd>Telescope diagnostics bufnr=nil<cr>", opts)
+
+opts.desc = "Restart LSP"
+Map("n", "<leader>rs", ":LspRestart<cr>", opts)
+
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
@@ -11,62 +66,8 @@ return {
 		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-		-- Specify how the border looks like
-		local border = {
-			{ "╭", "FloatBorder" },
-			{ "─", "FloatBorder" },
-			{ "╮", "FloatBorder" },
-			{ "│", "FloatBorder" },
-			{ "╯", "FloatBorder" },
-			{ "─", "FloatBorder" },
-			{ "╰", "FloatBorder" },
-			{ "│", "FloatBorder" },
-		}
-
 		local keybinds = function(client, bufnr)
 			local opts = { buffer = bufnr }
-
-			opts.desc = "Show LSP references"
-			Map("n", "gf", "<Cmd>Telescope lsp_references<cr>", opts)
-
-			opts.desc = "Go to declaration"
-			Map("n", "gD", vim.lsp.buf.declaration, opts)
-
-			opts.desc = "Show LSP definitions"
-			Map("n", "gd", "<Cmd>Telescope lsp_definitions<cr>:noh<cr>", opts)
-
-			opts.desc = "Show LSP implementations"
-			Map("n", "<leader>gf", "<Cmd>Telescope lsp_implementations<cr>", opts)
-
-			opts.desc = "Show type definitions"
-			Map("n", "gt", "<Cmd>Telescope lsp_type_definitions<cr>", opts)
-
-			opts.desc = "Show available code actions"
-			Map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-
-			opts.desc = "Smart rename"
-			Map("n", "<leader>q", vim.lsp.buf.rename, opts)
-
-			opts.desc = "Show buffer diagnostics"
-			Map("n", "gE", "<Cmd>Telescope diagnostics bufnr=nil<cr>", opts)
-
-			opts.desc = "Show line diagnostics"
-			vim.diagnostic.config({
-				float = { border = border },
-			})
-			Map("n", "ge", vim.diagnostic.open_float, opts)
-
-			opts.desc = "Go to previous diagnostic"
-			Map("n", "[e", vim.diagnostic.goto_prev, opts)
-
-			opts.desc = "Go to next diagnostic"
-			Map("n", "]e", vim.diagnostic.goto_next, opts)
-
-			opts.desc = "Show documentation"
-			Map("n", "gh", vim.lsp.buf.hover, opts)
-
-			opts.desc = "Restart LSP"
-			Map("n", "<leader>rs", ":LspRestart<cr>", opts)
 		end
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -122,6 +123,34 @@ return {
 						},
 					},
 				})
+			elseif "biome" == v then
+				opts = Merge(opts, {
+					cmd = { vim.fn.FindRootDirectory() .. "/node_modules/.bin/biome" },
+				})
+			elseif "vtsls" == v then
+				opts = Merge(opts, {
+					settings = {
+						typescript = { tsserver = { maxTsServerMemory = 6144 } },
+						vtsls = {
+							experimental = { completion = { enableServerSideFuzzyMatch = true } },
+						},
+					},
+				})
+			elseif "tsgo" == v then
+				opts = Merge(opts, {
+					default_config = {
+						cmd = { "tsgo", "--lsp", "--stdio" },
+						filetypes = {
+							"javascript",
+							"javascriptreact",
+							"javascript.jsx",
+							"typescript",
+							"typescriptreact",
+							"typescript.tsx",
+						},
+						root_dir = vim.fn.FindRootDirectory(),
+					},
+				})
 			end
 			vim.lsp.config(v, opts)
 		end
@@ -142,10 +171,10 @@ return {
 
 			if "pbp-api" == project then
 				-- print("starting limited language servers for project: 'pbp-api'")
-				vim.lsp.enable({ "vtsls", "html", "cssls", "biome" })
+				vim.lsp.enable({ "tsgo", "html", "cssls", "biome" })
 			elseif "platform" == project or "world" == project then
 				-- print("starting limited language servers for project: 'platform'")
-				vim.lsp.enable({ "vtsls", "html", "cssls", "eslint" })
+				vim.lsp.enable({ "tsgo", "html", "cssls", "eslint" })
 			else
 				-- print("no project found")
 				vim.lsp.enable(AllLsps, true)

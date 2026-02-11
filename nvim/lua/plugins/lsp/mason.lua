@@ -14,6 +14,7 @@ return {
 		mason_lspconfig.setup({
 			ensure_installed = {
 				"vtsls",
+                "tsgo",
 				"html",
 				"cssls",
 				"emmet_ls",
@@ -26,7 +27,6 @@ return {
 				"tailwindcss",
 				"pyright",
 				"rust_analyzer",
-				"eslint",
 			},
 			automatic_installation = true,
 			automatic_enable = false,
