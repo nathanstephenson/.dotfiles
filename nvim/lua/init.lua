@@ -134,7 +134,7 @@ require("lazy").setup({
 	{ import = "plugins.colours" },
 	{ import = "plugins.mini" },
 })
-vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme rose-pine]])
 vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#747990", bold = false })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#C7D1F0", bold = false })
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#747990", bold = false })
