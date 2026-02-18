@@ -13,8 +13,7 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"vtsls",
-                "tsgo",
+				"tsgo",
 				"html",
 				"cssls",
 				"emmet_ls",

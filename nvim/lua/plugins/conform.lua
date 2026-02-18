@@ -9,6 +9,9 @@ return {
 			javascriptreact = { "biome", "prettier", stop_after_first = true },
 			typescript = { "biome", "prettier", stop_after_first = true },
 			typescriptreact = { "biome", "prettier", stop_after_first = true },
+			ex = { "mix", stop_after_first = true },
+			exs = { "mix", stop_after_first = true },
+			rust = { "rustfmt" },
 		},
 		format_on_save = {
 			timeout_ms = 500,

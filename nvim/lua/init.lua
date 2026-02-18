@@ -115,7 +115,7 @@ AllLsps = {
 	"lua_ls",
 	"vimls",
 	"cssls",
-	"vtsls",
+	"tsgo",
 	"biome",
 	"eslint",
 	"kotlin_language_server",
