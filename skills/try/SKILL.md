@@ -2,7 +2,7 @@
 name: try
 description: Attempt to solve an issue by looping through a problem, spawning subagents, and using defined validation processes
 disable-model-invocation: true
-argument-hint: [project] [request]
+argument-hint: [project]
 ---
 
 Complete the request. If relevant, additional resources will contain extra information such as validation processes for a specific project. If the request is too vague in any way, ask for clarification before starting. 
