@@ -36,5 +36,5 @@ Use additional resources when available to inform your problem-solving process. 
 - If your solution does not meet the necessary criteria, identify the reasons for its shortcomings and make adjustments as needed. This may involve revisiting your problem-solving process, seeking out additional resources, or collaborating with others to refine your approach.
 - Set reasonable timeouts for validation processes to ensure that they are completed in a timely manner and do not cause unnecessary delays in your problem-solving efforts. If a validation process takes too long, consider breaking it down into smaller parts or seeking out additional resources to help speed up the process. This also helps to avoid getting stuck in a loop of validation without making progress towards a solution.
 
-## Additional Resources
-!`~/.claude/skills/try/scripts/helper.sh`
+<!-- ## Additional Resources -->
+<!-- !`~/.claude/skills/try/scripts/helper.sh` -->
