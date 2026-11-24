@@ -36,6 +36,7 @@ Set reasonable timeouts when looping to not get infinitely stuck, and ask me if 
 ## 5. Autonomous Bug Fixing
 - When given a bug report: just fix it.
 - Point at logs, errors, failing tests - then resolve them
+- You never need to run full test suites locally, that's what CI is for. Stick to testing what's actually relevant unless told otherwise
 - Go fix failing CI tests without being told how
 
 ## 6. Git
